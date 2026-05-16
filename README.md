@@ -22,6 +22,8 @@ Browser → CloudFront (CDN + HTTPS) → S3 Bucket (Private)
 ---
 
 ## 📁 Project Structure
+
+\`\`\`
 terraform-static-site/
 ├── .github/
 │   └── workflows/
@@ -34,6 +36,7 @@ terraform-static-site/
 ├── outputs.tf              # Output values
 ├── .gitignore
 └── README.md
+\`\`\`
 
 ---
 
@@ -78,6 +81,8 @@ Every push to `main` branch automatically:
 🔗 [https://d2ep9ki3pefnp3.cloudfront.net](https://d2ep9ki3pefnp3.cloudfront.net)
 
 ---
+
+
 
 ## 👩‍💻 Author
 
