@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sadia | DevOps Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0e1a;
+      --surface: #111827;
+      --card: #1a2235;
+      --border: #1e2d45;
+      --accent: #3b82f6;
+      --accent2: #06b6d4;
+      --green: #10b981;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Space Grotesk', sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Nav */
+    nav {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--accent);
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--green);
+      font-family: var(--mono);
+    }
+
+    .dot {
+      width: 8px; height: 8px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    /* Hero */
+    .hero {
+      padding: 80px 0 60px;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(59,130,246,0.1);
+      border: 1px solid rgba(59,130,246,0.3);
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+      letter-spacing: 0.05em;
+    }
+
+    h1 {
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 500px;
+      margin: 0 auto 40px;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    /* Terminal card */
+    .terminal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      max-width: 600px;
+      margin: 0 auto 80px;
+      text-align: left;
+    }
+
+    .terminal-bar {
+      background: var(--card);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .terminal-bar span {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+    }
+
+    .terminal-bar .r { background: #ef4444; }
+    .terminal-bar .y { background: #f59e0b; }
+    .terminal-bar .g { background: #10b981; }
+
+    .terminal-title {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      margin-left: 8px;
+    }
+
+    .terminal-body {
+      padding: 20px;
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 2;
+    }
+
+    .prompt { color: var(--accent); }
+    .cmd { color: var(--text); }
+    .out-green { color: var(--green); }
+    .out-cyan { color: var(--accent2); }
+    .out-muted { color: var(--muted); }
+
+    .cursor {
+      display: inline-block;
+      width: 8px; height: 14px;
+      background: var(--accent);
+      vertical-align: middle;
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    /* Stack cards */
+    .section-title {
+      font-size: 13px;
+      font-family: var(--mono);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 20px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 80px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .card-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .card h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .card p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* Tags */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 80px;
+    }
+
+    .tag {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 6px 14px;
+      border-radius: 6px;
+    }
+
+    .tag.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(59,130,246,0.08);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 30px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: var(--muted);
+      font-family: var(--mono);
+    }
+
+    .deployed {
+      color: var(--green);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <nav>
+    <div class="logo">~/sadia/devops</div>
+    <div class="status">
+      <div class="dot"></div>
+      deployed on aws
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="badge">🚀 Terraform + AWS</div>
+    <h1>
+      Infrastructure<br>
+      <span class="gradient-text">as Code</span>
+    </h1>
+    <p class="subtitle">
+      S3 + CloudFront দিয়ে deploy করা static site।
+      Terraform দিয়ে সব automate।
+    </p>
+  </section>
+
+  <div class="terminal">
+    <div class="terminal-bar">
+      <span class="r"></span>
+      <span class="y"></span>
+      <span class="g"></span>
+      <span class="terminal-title">bash — terraform-static-site</span>
+    </div>
+    <div class="terminal-body">
+      <div><span class="prompt">$ </span><span class="cmd">terraform apply</span></div>
+      <div class="out-muted">  Planning... 7 resources to create</div>
+      <div class="out-green">  ✓ aws_s3_bucket.website created</div>
+      <div class="out-green">  ✓ aws_cloudfront_distribution.cdn created</div>
+      <div class="out-green">  ✓ aws_s3_bucket_policy.website created</div>
+      <div class="out-cyan">  Apply complete! 7 added, 0 changed, 0 destroyed.</div>
+      <div>&nbsp;</div>
+      <div><span class="prompt">$ </span><span class="cmd">terraform output website_url</span></div>
+      <div class="out-cyan">  "https://d2ep9ki3pefnp3.cloudfront.net"</div>
+      <div>&nbsp;</div>
+      <div><span class="prompt">$ </span><span class="cursor"></span></div>
+    </div>
+  </div>
+
+  <p class="section-title">// tech stack</p>
+  <div class="cards">
+    <div class="card">
+      <div class="card-icon">🪣</div>
+      <h3>Amazon S3</h3>
+      <p>Static files host করে। Private bucket, শুধু CloudFront access পায়।</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">⚡</div>
+      <h3>CloudFront CDN</h3>
+      <p>Global edge locations থেকে fast delivery। HTTPS by default।</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔧</div>
+      <h3>Terraform</h3>
+      <p>Infrastructure as Code। একটা command এ সব deploy।</p>
+    </div>
+  </div>
+
+  <p class="section-title">// tools & skills</p>
+  <div class="tags">
+    <span class="tag active">Terraform</span>
+    <span class="tag active">AWS S3</span>
+    <span class="tag active">CloudFront</span>
+    <span class="tag">IAM</span>
+    <span class="tag">OAC</span>
+    <span class="tag">Linux</span>
+    <span class="tag">DevOps</span>
+    <span class="tag">IaC</span>
+    <span class="tag">CI/CD</span>
+    <span class="tag">Docker</span>
+  </div>
+
+  <footer>
+    <span>sadia • devops practice</span>
+    <span class="deployed">✓ live on aws cloudfront</span>
+  </footer>
+</div>
+
+</body>
+</html>
